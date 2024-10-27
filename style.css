@@ -1,0 +1,122 @@
+/**
+* https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/light-dark
+*/
+
+:root {
+    color-scheme: light dark;
+    --light-bg: #ffffff;
+    --light-text: #333333;
+    --light-card: #f0f0f0;
+    --light-button: #4a90e2;
+    --light-button-text: white;
+    
+    --dark-bg: #1a1a1a;
+    --dark-text: #ffffff;
+    --dark-card: #2d2d2d;
+    --dark-button: #61afef;
+    --dark-button-text: #1a1a1a;
+
+    /* Variables pour la transition */
+    --transition-speed: 0.2s;
+    --transition-timing: ease;
+}
+
+* {
+    /* Applique la transition à tous les éléments */
+    transition: background-color var(--transition-speed) var(--transition-timing),
+                color var(--transition-speed) var(--transition-timing),
+                border-color var(--transition-speed) var(--transition-timing),
+                box-shadow var(--transition-speed) var(--transition-timing);
+}
+
+body {
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+    font-family: system-ui, -apple-system, sans-serif;
+    background-color: light-dark(var(--light-bg), var(--dark-bg));
+    color: light-dark(var(--light-text), var(--dark-text));
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.theme-toggle {
+    background-color: light-dark(var(--light-button), var(--dark-button));
+    color: light-dark(var(--light-button-text), var(--dark-button-text));
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+}
+
+.theme-toggle:hover {
+    opacity: 0.9;
+}
+
+/* Animation du bouton */
+.theme-toggle::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity var(--transition-speed) var(--transition-timing);
+}
+
+.theme-toggle:active::after {
+    opacity: 1;
+}
+
+.card {
+    background-color: light-dark(var(--light-card), var(--dark-card));
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 4px light-dark(rgba(0,0,0,0.1), rgba(0,0,0,0.4));
+    transform: translateY(0);
+    transition: transform 0.2s var(--transition-timing),
+                box-shadow 0.2s var(--transition-timing);
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px light-dark(rgba(0,0,0,0.15), rgba(0,0,0,0.6));
+}
+
+/* Animation pour les nouveaux éléments */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: fadeIn 0.5s var(--transition-timing);
+}
+
+code {
+    background-color: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.1));
+    padding: 2px 6px;
+    border-radius: 4px;
+}
